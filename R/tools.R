@@ -28,12 +28,23 @@ validate <- function(checks) {
     msgs <- errors[!results]
     names <- names[!results]
 
-    msgs <- sapply(seq_along(msgs), function(i) errmsg(msgs[i], names[i]))
+    msgs <- paste(sapply(seq_along(msgs), function(i) paste("    ", errmsg(msgs[i], names[i]))), collapse="\n")
 
-    stop(msgs)
+    stop(paste("Valdeece failed to validate your input:\n", msgs, sep=""))
   }
 }
 
+#' @export
 is_valid <- function(validator) {
   validate(validator$checks)
+}
+
+create_validator <- function(value, value_name, validator_func, msg, additional_args=list(), ...){
+  additional <- c(msg, value_name, additional_args)
+
+  checks <- data.frame(Names = value_name,
+                       Results = validator_func(value),
+                       Errors = msg, stringsAsFactors = F)
+
+  from_checks(checks)
 }
