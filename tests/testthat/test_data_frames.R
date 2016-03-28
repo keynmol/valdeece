@@ -13,6 +13,7 @@ test_that("is_data_frame validates a data frame", {
 test_that("is_data_frame validates columns of a data frame", {
   df <- data.frame(X=1, Y="hello", Z = T, stringsAsFactors = F)
   expect_valid(is_data_frame(df, X=numeric_vector))
+  expect_invalid(is_data_frame("WRONG", X=numeric_vector))
   expect_valid(is_data_frame(df, X=numeric_vector, Z=logical_vector))
   expect_valid(is_data_frame(df, X=numeric_vector, Y = string_vector,  Z=logical_vector))
 })

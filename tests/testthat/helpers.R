@@ -1,5 +1,5 @@
 expect_invalid <- function(validator){
-  expect_error(is_valid(validator))
+  expect_error(is_valid(validator), regexp="Valdeece failed to validate your input:\n")
 }
 
 expect_valid <- function(validator){

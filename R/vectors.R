@@ -1,12 +1,4 @@
-create_validator <- function(value, value_name, validator_func, msg, additional_args=list(), ...){
-  additional <- c(msg, value_name, additional_args)
 
-  checks <- data.frame(Names = value_name,
-                       Results = validator_func(value),
-                       Errors = msg, stringsAsFactors = F)
-
-  from_checks(checks)
-}
 
 from_checks <- function(checks) {
   validator <- list(checks = checks)

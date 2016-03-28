@@ -13,14 +13,14 @@ is_data_frame <-
     validator <- create_validator(xx$value,
                                   xx$value_name,
                                   function(value)
-                                    is.data.frame(value) & (!non_empty | nrow(value) > 0),
+                                    is.data.frame(value) && (!non_empty | nrow(value) > 0),
                                   "Expected $$1 to be a data frame")
 
     base_validator <- combine_validators(xx$prev_validator, validator)
 
     column_validators <- list(...)
 
-    if (length(column_validators) > 0) {
+    if (length(column_validators) > 0 && is.data.frame(xx$value)) {
       col_validators <-
         do.call(combine_validators, lapply(names(column_validators),
                                            function(column) {
